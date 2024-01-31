@@ -16,7 +16,7 @@ RUN git clone --depth 1 https://github.com/sclorg/postgresql-container /postgres
 
 ################################################################################
 
-FROM quay.io/sclorg/s2i-core-c9s:c9s as base
+FROM registry.access.redhat.com/ubi9/s2i-core AS base
 
 # PostgreSQL image for OpenShift.
 # Volumes:
@@ -46,10 +46,11 @@ LABEL summary="$SUMMARY" \
       io.openshift.expose-services="5432:postgresql" \
       io.openshift.tags="database,postgresql,postgresql13,postgresql-13" \
       io.openshift.s2i.assemble-user="26" \
-      name="sclorg/postgresql-13-c9s" \
+      name="rhel9/postgresql-13" \
       com.redhat.component="postgresql-13-container" \
       version="1" \
-      usage="podman run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 sclorg/postgresql-13-c9s" \
+      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#rhel" \
+      usage="podman run -d --name postgresql_database -e POSTGRESQL_USER=user -e POSTGRESQL_PASSWORD=pass -e POSTGRESQL_DATABASE=db -p 5432:5432 rhel9/postgresql-13" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
 EXPOSE 5432
